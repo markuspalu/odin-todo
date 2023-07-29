@@ -3,9 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Document</title>
 </head>
 <body>
-    
+    <div class="addTodoScreen">
+        <label for="addTodoName">Task Name</label>
+        <input type="text" id="addTodoName" name="addTodoName" required>
+        <label for="addTodoPriority">Priority</label>
+        <input type="text" id="addTodoPriority" name="addTodoPriority" required>
+        <label for="addTodoNotes">Notes</label>
+        <input type="text" id="addTodoNotes" name="addTodoNotes" required>
+        <div class="addTodoButton">Add</div>
+    </div>
+    <div class="addProjectScreen">
+        <label for="addName">Name</label>
+        <input type="text" id="addName" name="addName" required>
+        <label for="addNotes">Notes</label>
+        <input type="text" id="addNotes" name="addNotes" required>
+        <div class="addButton">Add</div>
+    </div>
+    <div class="maincontainer">
+        <div class="leftcontainer">
+            <div class="logo">To-Do</div>
+            <div class="maintasks">Already here</div>
+            <div class="mainprojects">
+                <div class="projectAdder">
+                    <div class="projectTitle">Projects</div>
+                    <div class="addProject">Add</div>
+                </div>
+                <div class="addedProjects"></div>
+            </div>
+        </div>
+        <div class="rightcontainer">
+            <div class="projectName">-</div>
+            <div class="addTodo">Add new task</div>
+            <div class="todoContainer">
+                <div class="todoList">List of items</div>
+            </div>
+        </div>
+    </div>
+
 </body>
+<script src="script.js"></script>
 </html>

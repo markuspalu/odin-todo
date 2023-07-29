@@ -1,0 +1,83 @@
+body {
+    margin: 0;
+}
+
+.maincontainer {
+    display: flex;
+}
+
+.leftcontainer {
+    display: flex;
+    flex-direction: column;
+    width: 33%;
+    height: 100vh;
+    background-color: antiquewhite;
+}
+
+.mainprojects {
+    display: flex;
+    flex-direction: column;
+    margin-top: 100px;
+    gap: 50px;
+}
+
+.projectAdder {
+    display: flex;
+    gap: 50px;
+}
+
+.addedProjects {
+    display: flex;
+    flex-direction: column;
+}
+
+/* ADD PROJECT SCREEN */
+.addProjectScreen {
+    background-color:blanchedalmond;
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 1;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: -200px;
+    margin-left: -200px;
+    padding: 150px;
+}
+
+/* ADD TODO SCREEN */
+.addTodoScreen {
+    background-color:blanchedalmond;
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 1;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: -200px;
+    margin-left: -200px;
+    padding: 150px;
+}
+
+#addTodoNotes {
+    width: 100%;
+    height: 150px;
+}
+
+
+/* RIGHT CONTAINER */
+.rightcontainer {
+    display: flex;
+    flex-direction: column;
+    width: 66%;
+}
+
+.rightcontainer::before {
+    content: "Project Name";
+}
+
+.newTodo {
+    margin-top: 30px;
+}
