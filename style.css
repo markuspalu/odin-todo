@@ -66,6 +66,11 @@ body {
     height: 150px;
 }
 
+.fillTodoBlanks, .fillProjectBlanks {
+    position: absolute;
+    bottom: 100px;
+    color: red;
+}
 
 /* RIGHT CONTAINER */
 .rightcontainer {
@@ -81,3 +86,7 @@ body {
 .newTodo {
     margin-top: 30px;
 }
+
+.hidden {
+    display: none; /* This property hides the element and removes it from the layout */
+  }

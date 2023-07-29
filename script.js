@@ -1,23 +1,23 @@
 const addTodoScreen = document.querySelector(".addTodoScreen");
 const addTodo = document.querySelector(".addTodo");
 const addTodoButton = document.querySelector(".addTodoButton");
-
 const addTodoName = document.getElementById("addTodoName");
 const addTodoPriority = document.getElementById("addTodoPriority");
 const addTodoNotes = document.getElementById("addTodoNotes");
-
 const addProject = document.querySelector(".addProject");
 const maincontainer = document.querySelector(".maincontainer");
 const addProjectScreen = document.querySelector(".addProjectScreen");
-
 const addButton = document.querySelector(".addButton");
 const addName = document.getElementById("addName");
 const addNotes = document.getElementById("addNotes");
-
 const addedProjects = document.querySelector(".addedProjects");
+const maintasks = document.querySelector(".maintasks");
+const fillTodoBlanks = document.createElement("p");
+fillTodoBlanks.className = "fillTodoBlanks";
+const fillProjectBlanks = document.createElement("p");
+fillProjectBlanks.className = "fillProjectBlanks"
 
-
-
+projectList = [];
 
 const Project = (name, notes) => {
     let todoList = [];
@@ -34,16 +34,19 @@ const Project = (name, notes) => {
         todoList.appendChild(newTodo);
 
         const newTodoName = document.createElement("p");
-        const newTodoPriority = document.createElement("p");
-        const newTodoNotes = document.createElement("p");
+        newTodoName.className = "newTodoName";
+        // const newTodoPriority = document.createElement("p");
+        // const newTodoNotes = document.createElement("p");
+
 
         newTodoName.innerHTML = addedTodo.title;
-        newTodoPriority.innerHTML = addedTodo.priority;
-        newTodoNotes.innerHTML = addedTodo.notes;
+        // newTodoPriority.innerHTML = addedTodo.priority;
+        // newTodoNotes.innerHTML = addedTodo.notes;
 
         newTodo.appendChild(newTodoName);
-        newTodo.appendChild(newTodoPriority);
-        newTodo.appendChild(newTodoNotes);
+        // newTodo.appendChild(newTodoPriority);
+        // newTodo.appendChild(newTodoNotes);
+        clickTodo(newTodo);
     }
 
     const isClicked = () => {
@@ -64,14 +67,47 @@ const Project = (name, notes) => {
 
 
 const Todo = (title, notes, priority) => {
+    clickTodo = (newTodo) => {
+        newTodo.addEventListener("click", () => {
+            const projectName = document.querySelector(".projectName");
+            const foundProject = projectList.find((project) => project.name === projectName.innerHTML); // finds project name
+            const newTodoNameElement = newTodo.querySelector(".newTodoName");
+            const foundTodo = foundProject.todoList.find((todo) => todo.title === newTodoNameElement.textContent); // finds right todo
 
-    return {title, notes, priority};
+            const addedProjectNotes = newTodo.querySelector(".newTodoNotes");
+            const addedProjectPriority = newTodo.querySelector(".newTodoPriority");
+
+            if (!addedProjectNotes && !addedProjectPriority) {
+
+                const notesElement = document.createElement("p");
+                notesElement.className = "newTodoNotes";
+
+                const priorityElement = document.createElement("p");
+                priorityElement.className = "newTodoPriority";
+
+                newTodo.appendChild(notesElement);
+                newTodo.appendChild(priorityElement);
+
+                notesElement.innerText = foundTodo.notes;
+                priorityElement.innerText = foundTodo.priority;
+            } else {
+                const notesElement = document.querySelector(".newTodoNotes");
+                const priorityElement = document.querySelector(".newTodoPriority");
+                notesElement.remove();
+                priorityElement.remove();
+            }
+        });
+    }
+
+    return {title, notes, priority, clickTodo};
 }
 
-projectList = [];
+
+// ------------- CLICK BUTTONS ---------------
 
 addProject.addEventListener("click", () => { // Click Add Project
     maincontainer.style.filter = "blur(5px)";
+    maincontainer.style.pointerEvents = "none";
     addProjectScreen.style.display = "flex";
     addName.value = "";
     addNotes.value = "";
@@ -80,57 +116,68 @@ addProject.addEventListener("click", () => { // Click Add Project
 addButton.addEventListener("click", () => { // Click Confirm Add Project
     let addedName = addName.value;
     let addedNotes = addNotes.value;
+    if (addedName != "") {
+        const newProject = Project(addedName, addedNotes);
+        projectList.push(newProject);
 
-    const newProject = Project(addedName, addedNotes);
-    projectList.push(newProject);
+        const addedNewProject = document.createElement("div");
+        addedNewProject.className = "addedNewProject";
+        addedNewProject.innerHTML = newProject.name;
+        addedProjects.appendChild(addedNewProject);
 
-    const addedNewProject = document.createElement("div");
-    addedNewProject.className = "addedNewProject";
-    addedNewProject.innerHTML = newProject.name;
-    addedProjects.appendChild(addedNewProject);
+        addedNewProject.addEventListener("click", () => { // Click around Projects
+            newProject.isClicked();
+            newProject.printAll(newProject);
+        });
 
-    addedNewProject.addEventListener("click", () => { // Click around Projects
-        newProject.isClicked();
-        newProject.printAll(newProject);
-    });
-
-    maincontainer.style.filter = "none";
-    addProjectScreen.style.display = "none";
+        maincontainer.style.filter = "none";
+        maincontainer.style.pointerEvents = "auto";
+        addProjectScreen.style.display = "none";
+        fillProjectBlanks.innerHTML = "";
+    } else {
+        fillProjectBlanks.innerHTML = "Fill all the required blanks!";
+        addProjectScreen.appendChild(fillProjectBlanks);
+    }
 });
 
 addTodo.addEventListener("click", () => { // Click Add Todo
     maincontainer.style.filter = "blur(5px)";
+    maincontainer.style.pointerEvents = "none";
     addTodoScreen.style.display = "flex";
 
     addTodoName.value = "";
     addTodoPriority.value = "";
     addTodoNotes.value = "";
-
-
 });
 
 addTodoButton.addEventListener("click", () => { // Click Confirm Add Todo
+    const addTodoScreen = document.querySelector(".addTodoScreen");
     const projectName = document.querySelector(".projectName");
+    if (projectName.innerHTML == "") {
+        alert("You haven't selected a project");
+        maincontainer.style.filter = "none";
+        maincontainer.style.pointerEvents = "auto";
+        addTodoScreen.style.display = "none";
+    }
 
     let addedTodoName = addTodoName.value;
     let addedTodoNotes = addTodoNotes.value;
     let addedTodoPriority = addTodoPriority.value;
 
-    const selectedProject = projectList.find((project) => project.name === projectName.innerHTML);
-    selectedProject.addNewTodo(addedTodoName, addedTodoPriority, addedTodoNotes);
-    selectedProject.printAll(selectedProject);    
-    // for (let i = 0; i < selectedProject.todoList.length; i++) {
-    //     selectedProject.printTodos(selectedProject.todoList[i]);
-    // }
-    maincontainer.style.filter = "none";
-    addTodoScreen.style.display = "none";
+    if (addedTodoName != "" && addedTodoNotes != "" && addedTodoPriority != "") {
+        const selectedProject = projectList.find((project) => project.name === projectName.innerHTML);
+        selectedProject.addNewTodo(addedTodoName, addedTodoPriority, addedTodoNotes);
+        selectedProject.printAll(selectedProject);    
 
-
-})
-
-
-
-// const projectList = document.querySelectorAll(".addedNewProject");
+        maincontainer.style.filter = "none";
+        maincontainer.style.pointerEvents = "auto";
+        addTodoScreen.style.display = "none";
+        fillTodoBlanks.innerHTML = "";
+    } else {
+        fillTodoBlanks.innerHTML = "Fill all the required blanks!";
+        addTodoScreen.appendChild(fillTodoBlanks);
+    }
+});
 
 
 
