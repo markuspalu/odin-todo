@@ -1,5 +1,23 @@
 body {
     margin: 0;
+    font-family: 'Source Code Pro', monospace;
+    font-weight: bolder;
+    background-color: #FFFAFA;
+}
+
+.logo {
+    display: flex;
+    font-size: 40px;
+    padding: 50px;
+    justify-content: center;
+    align-items: center;
+    background-color: #FFC0D0;
+    transition: 700ms ease;
+}
+
+.logo:hover {
+    font-variation-settings: "wght" 582; 
+    letter-spacing: 5px;
 }
 
 .maincontainer {
@@ -9,27 +27,36 @@ body {
 .leftcontainer {
     display: flex;
     flex-direction: column;
-    width: 33%;
+    width: 25%;
     height: 100vh;
-    background-color: antiquewhite;
+    background-color: #FFE0E0;
 }
 
 .mainprojects {
     display: flex;
     flex-direction: column;
-    margin-top: 100px;
-    gap: 50px;
+    gap: 30px;
 }
 
 .projectAdder {
     display: flex;
     gap: 50px;
+    justify-content: space-between;
+    padding: 3px 50px;
+    border: 1px black solid;
+    border-left: 0;
+    border-right: 0;
 }
 
 .addedProjects {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    padding: 0 50px;
+    gap: 20px;
+}
+
+.addedNewProject {
+    border-bottom: 1px black dotted;
 }
 
 .deleteProject {
@@ -40,42 +67,81 @@ body {
 
 /* ADD PROJECT SCREEN */
 .addProjectScreen {
-    background-color:blanchedalmond;
+    background-color: #EFDFBF;
     display: none;
     position: absolute;
     top: 50%;
     left: 50%;
     z-index: 1;
     flex-direction: column;
-    justify-content: center;
     margin-top: -200px;
-    margin-left: -200px;
-    padding: 150px;
+    margin-left: -150px;
+    padding: 50px 100px 50px 100px;
+    align-items: center;
+    gap: 10px;
+}
+
+.addProjectScreen > label, .addProjectScreen > button {
+    display: flex;
+    justify-content: center;
+}
+
+.addProjectScreen > input {
+    font-family: 'Source Code Pro', monospace;
+    font-weight: bolder;
+}
+.addButton, .addTodoButton {
+    display: flex;
+    font-size: 16px;
+    font-family: 'Source Code Pro', monospace;
+    margin-top: 10px;
+    justify-content: center;
 }
 
 /* ADD TODO SCREEN */
 .addTodoScreen {
-    background-color:blanchedalmond;
+    background-color: #EFDFBF;
     display: none;
     position: absolute;
     top: 50%;
     left: 50%;
     z-index: 1;
     flex-direction: column;
-    justify-content: center;
-    margin-top: -200px;
-    margin-left: -200px;
-    padding: 150px;
+    margin-top: -250px;
+    margin-left: -150px;
+    padding: 50px 100px;
+    align-items: center;
+    gap: 10px;
+}
+
+#addNotes {
+    width: 78%;
+    height: 150px;
+    font-size: 16px;
+}
+
+#addTodoPriority {
+    padding: 5px;
+    width: 50%;
 }
 
 #addTodoNotes {
-    width: 100%;
+    width: 86%;
     height: 150px;
+    font-size: 16px;
+}
+
+#addNotes {
+    font-family: 'Source Code Pro', monospace;
+    font-weight: bolder;
 }
 
 .fillTodoBlanks, .fillProjectBlanks {
     position: absolute;
-    bottom: 100px;
+    display: flex;
+    font-size: 14px;
+    left: 18%;
+    bottom: 5px;
     color: red;
 }
 
@@ -90,15 +156,63 @@ body {
 .rightcontainer {
     display: flex;
     flex-direction: column;
-    width: 66%;
-}
-
-.rightcontainer::before {
-    content: "Project Name";
+    width: 75%;
+    padding: 3%;
 }
 
 .newTodo {
+    display: flex;
+    flex-direction: column;
     margin-top: 30px;
+    border: 1px black solid;
+    border-radius: 10px;
+    width: 250px;
+    align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    background-color: #FFE0E0;
+}
+
+.addTodo, .projectName, .todoList {
+    display: none;
+}
+
+.addTodo {
+    margin-top: 40px;
+    width: 100px;
+    text-align: left;
+}
+
+.projectName {
+    font-size: 28px;
+    padding-right: 130px;
+}
+
+.projectNotes {
+    padding-top: 8px;
+    font-size: 18px;
+    width: 300px;
+    word-wrap: break-word;
+}
+
+.todoList {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    padding: 10px;
+    gap: 30px;
+}
+
+.addTodoScreen > label {
+    display: flex;
+    justify-content: center;
+}
+
+.addTodoScreen > input {
+    font-family: 'Source Code Pro', monospace;
+    font-weight: bolder;
+}
+
+.newTodoName {
+    cursor:pointer;
 }
 
 .newTodoName::before {
@@ -106,9 +220,76 @@ body {
 }
 
 .newTodoPriority::before {
-    content: "Priority: "
+    content: "Priority: ";
 }
 
 .newTodoNotes::before {
-    content: "Notes: "
+    content: "Notes: ";
 }
+
+.newTodoDate::before {
+    content: "Due date: ";
+}
+
+button {
+    font-family: 'Source Code Pro', monospace;
+    font-weight: bolder;
+    border: none;
+    background: none;
+}
+
+.addProject {
+    font-size: 16px;
+}
+
+.projectDescription {
+    display: flex;
+    justify-content: space-between;
+    padding-right: 500px;
+}
+
+
+.zoom-in {
+    animation: zoomIn 1s ease forwards;
+}
+  @keyframes zoomIn {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.addedNewProject:hover {
+    background-color: rgb(0, 0, 0, 0.05);
+}
+
+.addProject, .addButton, .addTodoButton {
+    position: relative;
+    text-decoration: none;
+}
+
+.addProject::after, .addButton::after, .addTodoButton::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #000000;
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+  }
+  
+  .addProject:hover::after, .addButton:hover::after, .addTodoButton:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
+
+  .addButton, .addTodoButton {
+    width: fit-content;
+  }

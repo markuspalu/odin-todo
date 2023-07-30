@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@200&display=swap" rel="stylesheet">
+    <title>Todo</title>
 </head>
 <body>
     <div class="addTodoScreen">
@@ -18,31 +21,36 @@
             <option value="Low">Low</option>
         </select>
         <label for="addTodoNotes">Notes</label>
-        <input type="text" id="addTodoNotes" name="addTodoNotes" required>
-        <div class="addTodoButton">Add</div>
+        <textarea type="text" id="addTodoNotes" name="addTodoNotes" required></textarea>
+        <label for="addTodoDate">Due Date</label>
+        <input type="date" id="addTodoDate" name="addTodoDate" required>
+        <button class="addTodoButton">Add</button>
     </div>
     <div class="addProjectScreen">
         <button class="exitProjectButton">❌</button>
         <label for="addName">Name</label>
-        <input type="text" id="addName" name="addName" required>
+        <input type="text" id="addName" maxlength="50" name="addName" required>
         <label for="addNotes">Notes</label>
-        <input type="text" id="addNotes" name="addNotes" required>
-        <div class="addButton">Add</div>
+        <textarea type="text" id="addNotes" maxlength="200" name="addNotes" required></textarea>
+        <button class="addButton">Add</button>
     </div>
     <div class="maincontainer">
         <div class="leftcontainer">
             <div class="logo">To-Do</div>
             <div class="mainprojects">
                 <div class="projectAdder">
-                    <div class="projectTitle">Projects</div>
-                    <div class="addProject">Add</div>
+                    <div class="projectTitle">Projects ↓</div>
+                    <button class="addProject">Add</button>
                 </div>
                 <div class="addedProjects"></div>
             </div>
         </div>
         <div class="rightcontainer">
-            <div class="projectName"></div>
-            <div class="addTodo">Add new task</div>
+            <div class="projectDescription">
+                <div class="projectName"></div>
+                <div class="projectNotes"></div>
+            </div>
+            <button class="addTodo">New task +</button>
             <div class="todoContainer">
                 <div class="todoList"></div>
             </div>

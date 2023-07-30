@@ -4,6 +4,7 @@ const addTodoButton = document.querySelector(".addTodoButton");
 const addTodoName = document.getElementById("addTodoName");
 const addTodoPriority = document.getElementById("addTodoPriority");
 const addTodoNotes = document.getElementById("addTodoNotes");
+const addTodoDate = document.getElementById("addTodoDate");
 const addProject = document.querySelector(".addProject");
 const maincontainer = document.querySelector(".maincontainer");
 const addProjectScreen = document.querySelector(".addProjectScreen");
@@ -18,14 +19,17 @@ const fillProjectBlanks = document.createElement("p");
 fillProjectBlanks.className = "fillProjectBlanks";
 const exitTodoButton = document.querySelector(".exitTodoButton");
 const exitProjectButton = document.querySelector(".exitProjectButton");
+const projectName = document.querySelector(".projectName");
+const projectNotes = document.querySelector(".projectNotes");
+const todoList = document.querySelector(".todoList");
 
 projectList = [];
 
 const Project = (name, notes) => {
     let todoList = [];
 
-    const addNewTodo = (name, notes, priority) => {
-        const newTodo = Todo(name, notes, priority);
+    const addNewTodo = (name, notes, priority, date) => {
+        const newTodo = Todo(name, notes, priority, date);
         todoList.push(newTodo);
     }
 
@@ -37,23 +41,17 @@ const Project = (name, notes) => {
 
         const newTodoName = document.createElement("p");
         newTodoName.className = "newTodoName";
-        // const newTodoPriority = document.createElement("p");
-        // const newTodoNotes = document.createElement("p");
-
-
         newTodoName.innerHTML = addedTodo.title;
-        // newTodoPriority.innerHTML = addedTodo.priority;
-        // newTodoNotes.innerHTML = addedTodo.notes;
-
         newTodo.appendChild(newTodoName);
-        // newTodo.appendChild(newTodoPriority);
-        // newTodo.appendChild(newTodoNotes);
+
         clickTodo(newTodo);
     }
 
     const isClicked = () => {
         const projectName = document.querySelector(".projectName");
         projectName.innerHTML = name;
+        const projectNotes = document.querySelector(".projectNotes");
+        projectNotes.innerHTML = notes;
     }
 
     const printAll = (project) => {
@@ -67,7 +65,7 @@ const Project = (name, notes) => {
     return {name, notes, isClicked, todoList, addNewTodo, printTodos, printAll}
 }
 
-const Todo = (title, notes, priority) => {
+const Todo = (title, notes, priority, date) => {
 
     clickTodo = (newTodo) => {
         newTodo.firstChild.addEventListener("click", () => {   // Click Toggle for showing/hiding todo
@@ -79,9 +77,10 @@ const Todo = (title, notes, priority) => {
             const addedProjectNotes = newTodo.querySelector(".newTodoNotes");
             const addedProjectPriority = newTodo.querySelector(".newTodoPriority");
             const addedProjectDelete = newTodo.querySelector(".newTodoDelete");
+            const addedProjectDate = newTodo.querySelector(".newTodoDate");
             
 
-            if (!addedProjectNotes && !addedProjectPriority && !addedProjectDelete) {
+            if (!addedProjectNotes && !addedProjectPriority && !addedProjectDelete && !addedProjectDate) {
 
                 const priorityElement = document.createElement("p");
                 priorityElement.className = "newTodoPriority";
@@ -89,19 +88,25 @@ const Todo = (title, notes, priority) => {
                 const notesElement = document.createElement("p");
                 notesElement.className = "newTodoNotes";
 
+                const dateElement = document.createElement("p");
+                dateElement.className = "newTodoDate";
+
                 const deleteElement = document.createElement("button");
                 deleteElement.className = "newTodoDelete";
 
                 newTodo.appendChild(priorityElement);
                 newTodo.appendChild(notesElement);
+                newTodo.appendChild(dateElement);
                 newTodo.appendChild(deleteElement);
 
                 notesElement.innerText = foundTodo.notes;
                 priorityElement.innerText = foundTodo.priority;
+                dateElement.innerText = foundTodo.date;
+
                 deleteElement.innerText = "❌";
 
-                deleteElement.addEventListener("click", () => {
-                    deleteArrayItem(foundProject.todoList, foundTodo); // find todo in project todolist and delete
+                deleteElement.addEventListener("click", () => { // Click delete Todo
+                    deleteArrayItem(foundProject.todoList, foundTodo);
                     newTodo.remove();
                 });
 
@@ -116,11 +121,12 @@ const Todo = (title, notes, priority) => {
                 addedProjectNotes.remove();
                 addedProjectPriority.remove();
                 addedProjectDelete.remove();
+                addedProjectDate.remove();
             }
         });
     }
 
-    return {title, notes, priority, clickTodo, deleteArrayItem};
+    return {title, notes, priority, clickTodo, deleteArrayItem, date};
 }
 
 deleteArrayItem = (array, item) => {
@@ -138,7 +144,13 @@ addProject.addEventListener("click", () => { // Click Add Project
     addProjectScreen.style.display = "flex";
     addName.value = "";
     addNotes.value = "";
-    exitProjectButton.addEventListener("click", () => {
+
+    addProjectScreen.classList.add("zoom-in");
+    setTimeout(() => {
+      addProjectScreen.classList.remove("zoom-in");
+    }, 1000);
+
+    exitProjectButton.addEventListener("click", () => { // Click Exit Add Project
         maincontainer.style.filter = "none";
         maincontainer.style.pointerEvents = "auto";
         addProjectScreen.style.display = "none";
@@ -164,9 +176,17 @@ addButton.addEventListener("click", () => { // Click Confirm Add Project
 
         deleteProject.innerText = "❌";
 
-        deleteProject.addEventListener("click", () => {
+        deleteProject.addEventListener("click", () => { // Click Delete Project
             deleteArrayItem(projectList, newProject);
             addedNewProject.remove();
+            if (projectList.length === 0) {
+                const projectName = document.querySelector(".projectName");
+                const projectNotes = document.querySelector(".projectNotes");
+                addTodo.style.display = "none";
+                projectName.style.display = "none";
+                projectNotes.style.display = "none";
+                todoList.style.display = "none";
+            }
         })
 
 
@@ -175,7 +195,10 @@ addButton.addEventListener("click", () => { // Click Confirm Add Project
         addedNewProject.appendChild(spanElement);
 
         spanElement.addEventListener("click", () => { // Click around Projects
-            console.log("clicked");
+            addTodo.style.display = "block";
+            projectName.style.display = "block";
+            projectNotes.style.display = "block";
+            todoList.style.display = "flex";
             newProject.isClicked();
             newProject.printAll(newProject);
         });
@@ -193,12 +216,20 @@ addButton.addEventListener("click", () => { // Click Confirm Add Project
 addTodo.addEventListener("click", () => { // Click Add Todo
     maincontainer.style.filter = "blur(5px)";
     maincontainer.style.pointerEvents = "none";
+
+    addTodoScreen.classList.add("zoom-in");
+    setTimeout(() => {
+      addTodoScreen.classList.remove("zoom-in");
+    }, 1000);
+
     addTodoScreen.style.display = "flex";
 
     addTodoName.value = "";
     addTodoPriority.value = "";
     addTodoNotes.value = "";
-    exitTodoButton.addEventListener("click", () => {
+    addTodoDate.value = "";
+
+    exitTodoButton.addEventListener("click", () => { // Click Exit Add Todo
         maincontainer.style.filter = "none";
         maincontainer.style.pointerEvents = "auto";
         addTodoScreen.style.display = "none";
@@ -218,10 +249,11 @@ addTodoButton.addEventListener("click", () => { // Click Confirm Add Todo
     let addedTodoName = addTodoName.value;
     let addedTodoNotes = addTodoNotes.value;
     let addedTodoPriority = addTodoPriority.value;
+    let addedTodoDate = addTodoDate.value;
 
-    if (addedTodoName != "" && addedTodoNotes != "" && addedTodoPriority != "") {
+    if (addedTodoName != "" && addedTodoNotes != "" && addedTodoPriority != "" && addedTodoDate) {
         const selectedProject = projectList.find((project) => project.name === projectName.innerHTML);
-        selectedProject.addNewTodo(addedTodoName, addedTodoNotes, addedTodoPriority);
+        selectedProject.addNewTodo(addedTodoName, addedTodoNotes, addedTodoPriority, addedTodoDate);
         selectedProject.printAll(selectedProject);    
 
         maincontainer.style.filter = "none";
