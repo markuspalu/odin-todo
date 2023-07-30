@@ -8,15 +8,21 @@
 </head>
 <body>
     <div class="addTodoScreen">
+        <div class="exitTodoButton">❌</div>
         <label for="addTodoName">Task Name</label>
         <input type="text" id="addTodoName" name="addTodoName" required>
         <label for="addTodoPriority">Priority</label>
-        <input type="text" id="addTodoPriority" name="addTodoPriority" required>
+        <select id="addTodoPriority" name="addTodoPriority" required>
+            <option value="High">High</option>
+            <option value="Medium">Medium</option>
+            <option value="Low">Low</option>
+        </select>
         <label for="addTodoNotes">Notes</label>
         <input type="text" id="addTodoNotes" name="addTodoNotes" required>
         <div class="addTodoButton">Add</div>
     </div>
     <div class="addProjectScreen">
+        <div class="exitProjectButton">❌</div>
         <label for="addName">Name</label>
         <input type="text" id="addName" name="addName" required>
         <label for="addNotes">Notes</label>
@@ -26,7 +32,6 @@
     <div class="maincontainer">
         <div class="leftcontainer">
             <div class="logo">To-Do</div>
-            <div class="maintasks">Already here</div>
             <div class="mainprojects">
                 <div class="projectAdder">
                     <div class="projectTitle">Projects</div>

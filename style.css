@@ -72,6 +72,13 @@ body {
     color: red;
 }
 
+.exitTodoButton, .exitProjectButton {
+    position: absolute;
+    right: 2%;
+    top: 2%;
+    font-size: 24px;
+    cursor: pointer;
+}
 /* RIGHT CONTAINER */
 .rightcontainer {
     display: flex;
@@ -87,6 +94,14 @@ body {
     margin-top: 30px;
 }
 
-.hidden {
-    display: none; /* This property hides the element and removes it from the layout */
-  }
+.newTodoName::before {
+    content: "Name: ";
+}
+
+.newTodoPriority::before {
+    content: "Priority: "
+}
+
+.newTodoNotes::before {
+    content: "Notes: "
+}
