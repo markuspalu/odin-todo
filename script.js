@@ -69,13 +69,6 @@ const Project = (name, notes) => {
 
 const Todo = (title, notes, priority) => {
 
-    deleteArrayItem = (array, item) => {
-        const index = array.indexOf(item);
-        if (index !== -1) {
-            array.splice(index, 1);
-        }
-    }
-
     clickTodo = (newTodo) => {
         newTodo.firstChild.addEventListener("click", () => {   // Click Toggle for showing/hiding todo
             const projectName = document.querySelector(".projectName");
@@ -96,7 +89,7 @@ const Todo = (title, notes, priority) => {
                 const notesElement = document.createElement("p");
                 notesElement.className = "newTodoNotes";
 
-                const deleteElement = document.createElement("p");
+                const deleteElement = document.createElement("button");
                 deleteElement.className = "newTodoDelete";
 
                 newTodo.appendChild(priorityElement);
@@ -130,6 +123,13 @@ const Todo = (title, notes, priority) => {
     return {title, notes, priority, clickTodo, deleteArrayItem};
 }
 
+deleteArrayItem = (array, item) => {
+    const index = array.indexOf(item);
+    if (index !== -1) {
+        array.splice(index, 1);
+    }
+}
+
 // ------------- CLICK BUTTONS ---------------
 
 addProject.addEventListener("click", () => { // Click Add Project
@@ -153,11 +153,29 @@ addButton.addEventListener("click", () => { // Click Confirm Add Project
         projectList.push(newProject);
 
         const addedNewProject = document.createElement("div");
-        addedNewProject.className = "addedNewProject";
-        addedNewProject.innerHTML = newProject.name;
-        addedProjects.appendChild(addedNewProject);
+        const deleteProject = document.createElement("button");
+        const spanElement = document.createElement("span");
 
-        addedNewProject.addEventListener("click", () => { // Click around Projects
+        addedNewProject.className = "addedNewProject";
+        deleteProject.className = "deleteProject";
+        
+        spanElement.innerHTML = newProject.name;
+        
+
+        deleteProject.innerText = "❌";
+
+        deleteProject.addEventListener("click", () => {
+            deleteArrayItem(projectList, newProject);
+            addedNewProject.remove();
+        })
+
+
+        addedProjects.appendChild(addedNewProject);
+        addedNewProject.appendChild(deleteProject);
+        addedNewProject.appendChild(spanElement);
+
+        spanElement.addEventListener("click", () => { // Click around Projects
+            console.log("clicked");
             newProject.isClicked();
             newProject.printAll(newProject);
         });

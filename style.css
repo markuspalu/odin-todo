@@ -29,6 +29,13 @@ body {
 .addedProjects {
     display: flex;
     flex-direction: column;
+    gap: 10px;
+}
+
+.deleteProject {
+    background-color: transparent;
+    border: none;
+    float: right;
 }
 
 /* ADD PROJECT SCREEN */
